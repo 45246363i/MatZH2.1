@@ -17,3 +17,8 @@ prevBtn.addEventListener('click', () => {
     slides.style.transform = `translateX(${-slideWidth * counter}px)`;
   }
 });
+
+function closeOverlay() {
+  const headerOverlay = document.getElementById('headerOverlay');
+  headerOverlay.classList.add('hidden');
+};
