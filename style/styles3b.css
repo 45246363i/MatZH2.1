@@ -1,0 +1,129 @@
+/* CSS styles for body */
+body {
+    font-family: 'Roboto Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: #000000;
+    color: #ccc;
+  }
+  
+  .title-container {
+    text-align: justify;
+    margin-bottom: 20px;
+  }
+  
+  .title-container h1 {
+    font-size: 10px;
+    white-space: pre;
+    font-weight: bold;
+    animation: changeColor 3s linear infinite;
+  }
+  
+  @keyframes changeColor {
+    0% {
+      color: red;
+    }
+    33% {
+      color: green;
+    }
+    66% {
+      color: blue;
+    }
+    100% {
+      color: red;
+    }
+  }
+  
+  .calculator-container {
+    max-width: 600px;
+    padding: 20px;
+    border: 2px dashed #ccc;
+  }
+  
+  .random-string-field {
+    resize: none;
+    height: 200px;
+    width: 400px;
+    padding: 10px;
+    border: 2px dashed #ccc;
+    background-color: #222;
+    color: #ccc;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    line-height: 1.5;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    background-color: #222;
+    color: #ccc;
+    font-family: 'Roboto Mono', monospace;
+  }
+  
+  button:hover {
+    transform: scale(1.1);
+    animation: changeColorButton 1.5s linear infinite;
+  }
+  
+  @keyframes changeColorButton {
+    0% {
+      color: #ff0000;
+    }
+    33% {
+      color: #00ff00;
+    }
+    66% {
+      color: #0000ff;
+    }
+    100% {
+      color: #ff0000;
+    }
+  }
+  
+  input[type="number"] {
+    background-color: #222;
+    color: #ccc;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: bold;
+    border: none;
+    padding: 2px;
+    border-radius: 10px;
+  }
+  
+  #selected-lines {
+    transition: color 0.3s ease-in-out;
+    height: 70px;
+  }
+  
+  #selected-lines:hover {
+    color: #ff0000;
+    animation: changeColorOutput 1.5s linear infinite;
+  }
+  
+  @keyframes changeColorOutput {
+    0% {
+      color: #ff0000;
+    }
+    33% {
+      color: #00ff00;
+    }
+    66% {
+      color: #0000ff;
+    }
+    100% {
+      color: #ff0000;
+    }
+  }
+  

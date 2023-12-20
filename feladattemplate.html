@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Parallelogram Area Calculator</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap">
+  <style>
+    /* Styles remain the same */
+    body {
+      font-family: 'Roboto Mono', monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #000000;
+      color: #ccc;
+    }
+    .title-container {
+      text-align: justify;
+      margin-bottom: 20px;
+    }
+    .title-container h1 {
+      font-size: 10px; /* Adjust the font size as desired */
+      white-space: pre;
+      font-weight: bold;
+      animation: changeColor 3s linear infinite; /* Animation for color cycling */
+    }
+    @keyframes changeColor {
+      0% {
+        color: red; /* Start with red */
+      }
+      33% {
+        color: green; /* Transition to green at 33% */
+      }
+      66% {
+        color: blue; /* Transition to blue at 66% */
+      }
+      100% {
+        color: red; /* Back to red at 100% */
+      }
+    }
+    .calculator-container {
+      max-width: 600px; /* Adjust to your desired width */
+      padding: 20px;
+      border: 2px dashed  #ccc;
+    }
+    .input-group {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 10px;
+    }
+    label {
+      width: 80px; /* Adjust label width */
+      margin-right: 0px;
+      text-align: left;
+    }
+    input[type="number"] {
+      width: 400px; /* Adjust input field width */
+    }
+    canvas {
+      border: 1px solid #000;
+      display: block;
+      margin-top: 20px;
+    }
+    .button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+    button {
+      background-color:#222; /* Set button background color to black */
+      color: #ccc; /* Set button font color to #ccc */
+      font-family: 'Roboto Mono', monospace; /* Set font to Roboto */
+    }
+    button:hover {
+      transform: scale(1.1); /* Enlarge the button on hover */
+      animation: changeColorButton 1.5s linear infinite; /* Start color cycling on hover */
+    }
+    @keyframes changeColorButton {
+      0% {
+        color: #FF0000; /* Red */
+      }
+      33% {
+        color: #00FF00; /* Green */
+      }
+      66% {
+        color: #0000FF; /* Blue */
+      }
+      100% {
+        color: #FF0000; /* Back to red */
+      }
+    }
+    input[type="number"] {
+      background-color: #222; /* Set input field background color to very dark gray */
+      color: #ccc; /* Set input field font color to #ccc */
+      font-family: 'Roboto Mono', monospace; /* Set font to Roboto */
+      font-weight: bold; /* Make the text bold */
+      border: none; /* Remove default border */
+      padding: 2px; /* Adjust padding as needed */
+      border-radius: 10px; /* Rounded corners */
+    }
+    .random-string-field {
+      resize: none;
+      height: 200px; /* Adjust height for 8 lines */
+      width: 400px; /* Adjust width */
+      padding: 10px;
+      border: 2px dashed #ccc;
+      background-color: #222;
+      color: #ccc;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 14px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      text-align: center; /* Center-align text */
+      line-height: 1.5; /* Adjust line height for better readability */
+    }
+    #selected-lines {
+  transition: color 0.3s ease-in-out; /* Add transition for smooth color change */
+  height: 70px; /* Adjust the height as needed */
+}
+#selected-lines:hover {
+  color: #FF0000; /* Red */
+  animation: changeColorOutput 1.5s linear infinite; /* Start color cycling on hover */
+}
+@keyframes changeColorOutput {
+  0% {
+    color: #FF0000; /* Red */
+  }
+  33% {
+    color: #00FF00; /* Green */
+  }
+  66% {
+    color: #0000FF; /* Blue */
+  }
+  100% {
+    color: #FF0000; /* Back to red */
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="title-container">
+    <h1>
+      ('-.      (`\ .-') /` .-')                _   .-')       ('-.          .-')    .-') _   _  .-')               .-') _                                 ('-.       .-') _   ('-.  _  .-')     ('-.     .-') _                _  .-')   
+      ( OO ).-.   `.( OO ),'( OO ).             ( '.( OO )_   _(  OO)        ( OO ). (  OO) ) ( \( -O )             ( OO ) )                              _(  OO)     ( OO ) )_(  OO)( \( -O )   ( OO ).-.(  OO) )              ( \( -O )  
+      / . --. /,--./  .--. (_)---\_) .-'),-----. ,--.   ,--.)(,------.      (_)---\_)/     '._ ,------.  ,-.-') ,--./ ,--,'  ,----.            ,----.    (,------.,--./ ,--,'(,------.,------.   / . --. //     '._  .-'),-----. ,------.  
+      | \-.  \ |      |  | /    _ | ( OO'  .-.  '|   `.'   |  |  .---'      /    _ | |'--...__)|   /`. ' |  |OO)|   \ |  |\ '  .-./-')        '  .-./-')  |  .---'|   \ |  |\ |  .---'|   /`. '  | \-.  \ |'--...__)( OO'  .-.  '|   /`. ' 
+    .-'-'  |  ||  |   |  |,\  :` `. /   |  | |  ||         |  |  |          \  :` `. '--.  .--'|  /  | | |  |  \|    \|  | )|  |_( O- )       |  |_( O- ) |  |    |    \|  | )|  |    |  /  | |.-'-'  |  |'--.  .--'/   |  | |  ||  /  | | 
+     \| |_.'  ||  |.'.|  |_)'..`''.)\_) |  |\|  ||  |'.'|  | (|  '--.        '..`''.)   |  |   |  |_.' | |  |(_/|  .     |/ |  | .--, \       |  | .--, \(|  '--. |  .     |/(|  '--. |  |_.' | \| |_.'  |   |  |   \_) |  |\|  ||  |_.' | 
+      |  .-.  ||         | .-._)   \  \ |  | |  ||  |   |  |  |  .--'       .-._)   \   |  |   |  .  '.',|  |_.'|  |\    | (|  | '. (_/      (|  | '. (_/ |  .--' |  |\    |  |  .--' |  .  '.'  |  .-.  |   |  |     \ |  | |  ||  .  '.' 
+      |  | |  ||   ,'.   | \       /   `'  '-'  '|  |   |  |  |  `---.      \       /   |  |   |  |\  \(_|  |   |  | \   |  |  '--'  |        |  '--'  |  |  `---.|  | \   |  |  `---.|  |\  \   |  | |  |   |  |      `'  '-'  '|  |\  \  
+      `--' `--''--'   '--'  `-----'      `-----' `--'   `--'  `------'       `-----'    `--'   `--' '--' `--'   `--'  `--'   `------'          `------'   `------'`--'  `--'  `------'`--' '--'  `--' `--'   `--'        `-----' `--' '--' 
+    </h1>
+  </div>
+  <div class="calculator-container">
+    <textarea class="random-string-field" onclick="generateRandomStrings(this)">Click here to generate random strings</textarea>
+    <div class="button-container">
+      <button id="randomButton" onclick="selectRandomLines()" disabled>Select Random Lines</button>
+    </div>
+    <textarea id="selected-lines" class="random-string-field" readonly rows="3"></textarea>
+  </div>
+<script>
+  let generated = false; // Flag to track if strings are already generated
+
+  // Function to generate random strings and populate the field
+  function generateRandomStrings(element) {
+    if (!generated) { // Check if strings are not already generated
+      
+      // Define characters to be used in generating random strings
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|[]\\;\',./<>?';
+      const length = 32; // Length of each line
+      const lines = 8; // Number of lines
+
+      let randomStrings = '';
+      for (let i = 0; i < lines; i++) {
+        let line = '';
+        for (let j = 0; j < length; j++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          line += characters.charAt(randomIndex);
+        }
+        randomStrings += line + '\n';
+      }
+      element.value = randomStrings; // Populate the field with generated strings
+      
+      // Enable the button after generating random strings
+      document.getElementById('randomButton').disabled = false;
+      
+      generated = true; // Update the flag to indicate generation
+    }
+  }
+
+  // Function to select random lines and display in a new textarea
+  function selectRandomLines() {
+    const textArea = document.querySelector('.random-string-field');
+    const lines = textArea.value.split('\n').filter(line => line.trim() !== ''); // Get lines, remove empty ones
+
+    const selectedLines = [];
+    while (selectedLines.length < 3 && lines.length > 0) {
+      const randomIndex = Math.floor(Math.random() * lines.length);
+      selectedLines.push(lines[randomIndex]);
+      lines.splice(randomIndex, 1);
+    }
+
+    const selectedTextArea = document.getElementById('selected-lines');
+    selectedTextArea.value = selectedLines.join('\n');
+  }
+</script>
+</body>
+</html>
