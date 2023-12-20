@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Parallelogram Area Calculator</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap">
   <style>
     /* Styles remain the same */
+    body {
+      font-family: 'Roboto Mono', monospace;
+    }
     canvas {
       border: 1px solid #000;
       display: block;
@@ -15,19 +19,19 @@
 <body>
   <div class="input-group">
     <label for="sideA">Side A:</label>
-    <input type="number" id="sideA">
+    <input type="number" id="sideA" min="0">
   </div>
   <div class="input-group">
     <label for="sideB">Side B:</label>
-    <input type="number" id="sideB">
+    <input type="number" id="sideB" min="0">
   </div>
   <div class="input-group">
-    <label for="angle">Angle between sides:</label>
-    <input type="number" id="angle">
+    <label for="angle">Angle :</label>
+    <input type="number" id="angle" min="0">
   </div>
   <div class="input-group">
     <label for="height">Height:</label>
-    <input type="number" id="height">
+    <input type="number" id="height" min="0">
   </div>
   <button onclick="calculateAreaWithHeight()">Calculate Area (Height Method)</button>
   <button onclick="calculateAreaWithAngle()">Calculate Area (Angle Method)</button>
@@ -45,18 +49,23 @@
       let area;
 
       if (!isNaN(sideA) && !isNaN(height)) {
+        if (sideA > 0 && height > 0) {
         area = sideA * height;
         area = Math.abs(area);
-
+        drawParallelogram(sideA, height, angle);
         if (!isNaN(area)) {
           document.getElementById('result').textContent = area.toFixed(2);
+          
         } else {
           document.getElementById('result').textContent = 'Please enter valid values';
         }
       } else {
+    document.getElementById('result').textContent = 'Please enter non-negative and non 0 values for side A and height';
+  }
+      } else {
         document.getElementById('result').textContent = 'Please enter side A and height';
       }
-      drawParallelogram(sideA, height, angle);
+      
     }
 
     function calculateAreaWithAngle() {
@@ -67,19 +76,23 @@
       let area;
 
       if (!isNaN(sideA) && !isNaN(sideB) && !isNaN(angle)) {
+        if (sideA > 0 && sideB > 0 && angle > 0) {
         const radianAngle = (angle * Math.PI) / 180; // Convert angle to radians
         area = sideA * sideB * Math.sin(radianAngle);
         area = Math.abs(area);
-
+        drawParallelogram(sideA, sideB, angle);
         if (!isNaN(area)) {
           document.getElementById('result').textContent = area.toFixed(2);
         } else {
           document.getElementById('result').textContent = 'Please enter valid values';
         }
       } else {
+    document.getElementById('result').textContent = 'Please enter non-negative and non zero values for side A, side B, and angle';
+  }
+      } else {
         document.getElementById('result').textContent = 'Please enter side A, side B, and angle';
       }
-      drawParallelogram(sideA, sideB, angle);
+
     }
 
     function drawParallelogram(a, b, angle) {
@@ -92,7 +105,8 @@
        const scaleFactor = canvas.width / (a+b);
        const scaledA = a * scaleFactor;
        const scaledB = b * Math.cos(radianAngle) * scaleFactor;
-      // Calculate coordinates of parallelogram vertices
+ 
+       // Calculate coordinates of parallelogram vertices
       const x1 = (canvas.width - scaledA - scaledB * Math.cos(radianAngle)) / 2;
       const y1 = canvas.height / 2;
       const x2 = x1 + scaledA;
@@ -101,6 +115,15 @@
       const y3 = y1 - scaledB * Math.sin(radianAngle);
       const x4 = x3 + scaledA;
       const y4 = y3;
+
+       // Generate random fill and stroke colors
+      const randomFillColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+      const randomStrokeColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+
+       // Set fill and stroke styles
+      ctx.fillStyle = randomFillColor;
+      ctx.strokeStyle = randomStrokeColor;
+     
       // Draw parallelogram
       ctx.beginPath();
       ctx.moveTo(x1, y1);
@@ -108,6 +131,7 @@
       ctx.lineTo(x4, y4);
       ctx.lineTo(x3, y3);
       ctx.closePath();
+      ctx.fill();
       ctx.stroke();
     }
   </script>
