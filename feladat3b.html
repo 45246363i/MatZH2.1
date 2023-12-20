@@ -22,10 +22,10 @@
       margin-bottom: 20px;
     }
     .title-container h1 {
-      font-size: 12px; /* Adjust the font size as desired */
+      font-size: 10px; /* Adjust the font size as desired */
       white-space: pre;
       font-weight: bold;
-      animation: changeColor 1.5s linear infinite; /* Animation for color cycling */
+      animation: changeColor 3s linear infinite; /* Animation for color cycling */
     }
     @keyframes changeColor {
       0% {
@@ -65,6 +65,11 @@
       display: block;
       margin-top: 20px;
     }
+    .button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
     button {
       background-color:#222; /* Set button background color to black */
       color: #ccc; /* Set button font color to #ccc */
@@ -112,16 +117,50 @@
       text-align: center; /* Center-align text */
       line-height: 1.5; /* Adjust line height for better readability */
     }
+    #selected-lines {
+  transition: color 0.3s ease-in-out; /* Add transition for smooth color change */
+  height: 70px; /* Adjust the height as needed */
+}
+#selected-lines:hover {
+  color: #FF0000; /* Red */
+  animation: changeColorOutput 1.5s linear infinite; /* Start color cycling on hover */
+}
+@keyframes changeColorOutput {
+  0% {
+    color: #FF0000; /* Red */
+  }
+  33% {
+    color: #00FF00; /* Green */
+  }
+  66% {
+    color: #0000FF; /* Blue */
+  }
+  100% {
+    color: #FF0000; /* Back to red */
+  }
+}
   </style>
 </head>
 <body>
   <div class="title-container">
     <h1>
-      <!-- ASCII Art text removed for brevity -->
+      ('-.      (`\ .-') /` .-')                _   .-')       ('-.          .-')    .-') _   _  .-')               .-') _                                 ('-.       .-') _   ('-.  _  .-')     ('-.     .-') _                _  .-')   
+      ( OO ).-.   `.( OO ),'( OO ).             ( '.( OO )_   _(  OO)        ( OO ). (  OO) ) ( \( -O )             ( OO ) )                              _(  OO)     ( OO ) )_(  OO)( \( -O )   ( OO ).-.(  OO) )              ( \( -O )  
+      / . --. /,--./  .--. (_)---\_) .-'),-----. ,--.   ,--.)(,------.      (_)---\_)/     '._ ,------.  ,-.-') ,--./ ,--,'  ,----.            ,----.    (,------.,--./ ,--,'(,------.,------.   / . --. //     '._  .-'),-----. ,------.  
+      | \-.  \ |      |  | /    _ | ( OO'  .-.  '|   `.'   |  |  .---'      /    _ | |'--...__)|   /`. ' |  |OO)|   \ |  |\ '  .-./-')        '  .-./-')  |  .---'|   \ |  |\ |  .---'|   /`. '  | \-.  \ |'--...__)( OO'  .-.  '|   /`. ' 
+    .-'-'  |  ||  |   |  |,\  :` `. /   |  | |  ||         |  |  |          \  :` `. '--.  .--'|  /  | | |  |  \|    \|  | )|  |_( O- )       |  |_( O- ) |  |    |    \|  | )|  |    |  /  | |.-'-'  |  |'--.  .--'/   |  | |  ||  /  | | 
+     \| |_.'  ||  |.'.|  |_)'..`''.)\_) |  |\|  ||  |'.'|  | (|  '--.        '..`''.)   |  |   |  |_.' | |  |(_/|  .     |/ |  | .--, \       |  | .--, \(|  '--. |  .     |/(|  '--. |  |_.' | \| |_.'  |   |  |   \_) |  |\|  ||  |_.' | 
+      |  .-.  ||         | .-._)   \  \ |  | |  ||  |   |  |  |  .--'       .-._)   \   |  |   |  .  '.',|  |_.'|  |\    | (|  | '. (_/      (|  | '. (_/ |  .--' |  |\    |  |  .--' |  .  '.'  |  .-.  |   |  |     \ |  | |  ||  .  '.' 
+      |  | |  ||   ,'.   | \       /   `'  '-'  '|  |   |  |  |  `---.      \       /   |  |   |  |\  \(_|  |   |  | \   |  |  '--'  |        |  '--'  |  |  `---.|  | \   |  |  `---.|  |\  \   |  | |  |   |  |      `'  '-'  '|  |\  \  
+      `--' `--''--'   '--'  `-----'      `-----' `--'   `--'  `------'       `-----'    `--'   `--' '--' `--'   `--'  `--'   `------'          `------'   `------'`--'  `--'  `------'`--' '--'  `--' `--'   `--'        `-----' `--' '--' 
     </h1>
   </div>
   <div class="calculator-container">
     <textarea class="random-string-field" onclick="generateRandomStrings(this)">Click here to generate random strings</textarea>
+    <div class="button-container">
+      <button id="randomButton" onclick="selectRandomLines()" disabled>Select Random Lines</button>
+    </div>
+    <textarea id="selected-lines" class="random-string-field" readonly rows="3"></textarea>
   </div>
 <script>
   let generated = false; // Flag to track if strings are already generated
@@ -145,8 +184,28 @@
         randomStrings += line + '\n';
       }
       element.value = randomStrings; // Populate the field with generated strings
+      
+      // Enable the button after generating random strings
+      document.getElementById('randomButton').disabled = false;
+      
       generated = true; // Update the flag to indicate generation
     }
+  }
+
+  // Function to select random lines and display in a new textarea
+  function selectRandomLines() {
+    const textArea = document.querySelector('.random-string-field');
+    const lines = textArea.value.split('\n').filter(line => line.trim() !== ''); // Get lines, remove empty ones
+
+    const selectedLines = [];
+    while (selectedLines.length < 3 && lines.length > 0) {
+      const randomIndex = Math.floor(Math.random() * lines.length);
+      selectedLines.push(lines[randomIndex]);
+      lines.splice(randomIndex, 1);
+    }
+
+    const selectedTextArea = document.getElementById('selected-lines');
+    selectedTextArea.value = selectedLines.join('\n');
   }
 </script>
 </body>
