@@ -97,6 +97,21 @@
       padding: 2px; /* Adjust padding as needed */
       border-radius: 10px; /* Rounded corners */
     }
+    .random-string-field {
+      resize: none;
+      height: 200px; /* Adjust height for 8 lines */
+      width: 400px; /* Adjust width */
+      padding: 10px;
+      border: 2px dashed #ccc;
+      background-color: #222;
+      color: #ccc;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 14px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      text-align: center; /* Center-align text */
+      line-height: 1.5; /* Adjust line height for better readability */
+    }
   </style>
 </head>
 <body>
@@ -106,28 +121,33 @@
     </h1>
   </div>
   <div class="calculator-container">
-    <div class="input-group">
-      <label for="sideA">Side A:</label>
-      <input type="number" id="sideA" min="0">
-    </div>
-    <div class="input-group">
-      <label for="sideB">Side B:</label>
-      <input type="number" id="sideB" min="0">
-    </div>
-    <div class="input-group">
-      <label for="angle">Angle :</label>
-      <input type="number" id="angle" min="0">
-    </div>
-    <div class="input-group">
-      <label for="height">Height:</label>
-      <input type="number" id="height" min="0">
-    </div>
-    <button onclick="calculateAreaWithHeight()">Calculate Area (Height Method)</button>
-    <button onclick="calculateAreaWithAngle()">Calculate Area (Angle Method)</button>
-    <div class="result">
-      <p>Area: <span id="result"></span></p>
-    </div>
-    <canvas id="parallelogramCanvas" width="400" height="300"></canvas>
+    <textarea class="random-string-field" onclick="generateRandomStrings(this)">Click here to generate random strings</textarea>
   </div>
+<script>
+  let generated = false; // Flag to track if strings are already generated
+
+  // Function to generate random strings and populate the field
+  function generateRandomStrings(element) {
+    if (!generated) { // Check if strings are not already generated
+      
+      // Define characters to be used in generating random strings
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|[]\\;\',./<>?';
+      const length = 32; // Length of each line
+      const lines = 8; // Number of lines
+
+      let randomStrings = '';
+      for (let i = 0; i < lines; i++) {
+        let line = '';
+        for (let j = 0; j < length; j++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          line += characters.charAt(randomIndex);
+        }
+        randomStrings += line + '\n';
+      }
+      element.value = randomStrings; // Populate the field with generated strings
+      generated = true; // Update the flag to indicate generation
+    }
+  }
+</script>
 </body>
 </html>
