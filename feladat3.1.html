@@ -5,6 +5,11 @@
   <title>Parallelogram Area Calculator</title>
   <style>
     /* Styles remain the same */
+    canvas {
+      border: 1px solid #000;
+      display: block;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -29,6 +34,8 @@
   <div class="result">
     <p>Area: <span id="result"></span></p>
   </div>
+  
+  <canvas id="parallelogramCanvas" width="400" height="300"></canvas>
 
   <script>
     function calculateAreaWithHeight() {
@@ -48,6 +55,7 @@
       } else {
         document.getElementById('result').textContent = 'Please enter side A and height';
       }
+      drawParallelogram(sideA, height, angle);
     }
 
     function calculateAreaWithAngle() {
@@ -69,6 +77,35 @@
       } else {
         document.getElementById('result').textContent = 'Please enter side A, side B, and angle';
       }
+      drawParallelogram(sideA, sideB, angle);
+    }
+
+    function drawParallelogram(a, b, angle) {
+      const canvas = document.getElementById('parallelogramCanvas');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const radianAngle = (angle * Math.PI) / 180; // Convert angle to radians
+      const c = Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(radianAngle)); // Calculate third side
+
+      // Calculate coordinates of parallelogram vertices
+      const x1 = 50;
+      const y1 = canvas.height / 2;
+      const x2 = x1 + a;
+      const y2 = y1;
+      const x3 = x1 + b * Math.cos(radianAngle);
+      const y3 = y1 - b * Math.sin(radianAngle);
+      const x4 = x3 + a;
+      const y4 = y3;
+
+      // Draw parallelogram
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.lineTo(x4, y4);
+      ctx.lineTo(x3, y3);
+      ctx.closePath();
+      ctx.stroke();
     }
   </script>
 </body>
