@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Parallelogram Area Calculator</title>
+  <style>
+    /* Styles remain the same */
+  </style>
+</head>
+<body>
+  <div class="input-group">
+    <label for="sideA">Side A:</label>
+    <input type="number" id="sideA">
+  </div>
+  <div class="input-group">
+    <label for="sideB">Side B:</label>
+    <input type="number" id="sideB">
+  </div>
+  <div class="input-group">
+    <label for="angle">Angle between sides:</label>
+    <input type="number" id="angle">
+  </div>
+  <div class="input-group">
+    <label for="height">Height:</label>
+    <input type="number" id="height">
+  </div>
+  <button onclick="calculateAreaWithHeight()">Calculate Area (Height Method)</button>
+  <button onclick="calculateAreaWithAngle()">Calculate Area (Angle Method)</button>
+  <div class="result">
+    <p>Area: <span id="result"></span></p>
+  </div>
+
+  <script>
+    function calculateAreaWithHeight() {
+      const sideA = parseFloat(document.getElementById('sideA').value);
+      const height = parseFloat(document.getElementById('height').value);
+
+      let area;
+
+      if (!isNaN(sideA) && !isNaN(height)) {
+        area = sideA * height;
+
+        if (!isNaN(area)) {
+          document.getElementById('result').textContent = area.toFixed(2);
+        } else {
+          document.getElementById('result').textContent = 'Please enter valid values';
+        }
+      } else {
+        document.getElementById('result').textContent = 'Please enter side A and height';
+      }
+    }
+
+    function calculateAreaWithAngle() {
+      const sideA = parseFloat(document.getElementById('sideA').value);
+      const sideB = parseFloat(document.getElementById('sideB').value);
+      const angle = parseFloat(document.getElementById('angle').value);
+
+      let area;
+
+      if (!isNaN(sideA) && !isNaN(sideB) && !isNaN(angle)) {
+        const radianAngle = (angle * Math.PI) / 180; // Convert angle to radians
+        area = sideA * sideB * Math.sin(radianAngle);
+
+        if (!isNaN(area)) {
+          document.getElementById('result').textContent = area.toFixed(2);
+        } else {
+          document.getElementById('result').textContent = 'Please enter valid values';
+        }
+      } else {
+        document.getElementById('result').textContent = 'Please enter side A, side B, and angle';
+      }
+    }
+  </script>
+</body>
+</html>
