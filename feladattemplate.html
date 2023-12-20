@@ -42,9 +42,11 @@
       }
     }
     .calculator-container {
-      max-width: 600px; /* Adjust to your desired width */
-      padding: 20px;
-      border: 2px dashed  #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      gap: 20px;
     }
     .input-group {
       display: flex;
@@ -139,74 +141,48 @@
     color: #FF0000; /* Back to red */
   }
 }
+.input-group {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 10px;
+    }
+    label {
+      width: 80px;
+      margin-right: 10px;
+      text-align: left;
+    }
+    input[type="text"],
+    input[type="number"] {
+      height: 400px;
+      width: 400px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-family: 'Roboto Mono', monospace;
+    }
   </style>
 </head>
 <body>
   <div class="title-container">
-    <h1>
-      ('-.      (`\ .-') /` .-')                _   .-')       ('-.          .-')    .-') _   _  .-')               .-') _                                 ('-.       .-') _   ('-.  _  .-')     ('-.     .-') _                _  .-')   
-      ( OO ).-.   `.( OO ),'( OO ).             ( '.( OO )_   _(  OO)        ( OO ). (  OO) ) ( \( -O )             ( OO ) )                              _(  OO)     ( OO ) )_(  OO)( \( -O )   ( OO ).-.(  OO) )              ( \( -O )  
-      / . --. /,--./  .--. (_)---\_) .-'),-----. ,--.   ,--.)(,------.      (_)---\_)/     '._ ,------.  ,-.-') ,--./ ,--,'  ,----.            ,----.    (,------.,--./ ,--,'(,------.,------.   / . --. //     '._  .-'),-----. ,------.  
-      | \-.  \ |      |  | /    _ | ( OO'  .-.  '|   `.'   |  |  .---'      /    _ | |'--...__)|   /`. ' |  |OO)|   \ |  |\ '  .-./-')        '  .-./-')  |  .---'|   \ |  |\ |  .---'|   /`. '  | \-.  \ |'--...__)( OO'  .-.  '|   /`. ' 
-    .-'-'  |  ||  |   |  |,\  :` `. /   |  | |  ||         |  |  |          \  :` `. '--.  .--'|  /  | | |  |  \|    \|  | )|  |_( O- )       |  |_( O- ) |  |    |    \|  | )|  |    |  /  | |.-'-'  |  |'--.  .--'/   |  | |  ||  /  | | 
-     \| |_.'  ||  |.'.|  |_)'..`''.)\_) |  |\|  ||  |'.'|  | (|  '--.        '..`''.)   |  |   |  |_.' | |  |(_/|  .     |/ |  | .--, \       |  | .--, \(|  '--. |  .     |/(|  '--. |  |_.' | \| |_.'  |   |  |   \_) |  |\|  ||  |_.' | 
-      |  .-.  ||         | .-._)   \  \ |  | |  ||  |   |  |  |  .--'       .-._)   \   |  |   |  .  '.',|  |_.'|  |\    | (|  | '. (_/      (|  | '. (_/ |  .--' |  |\    |  |  .--' |  .  '.'  |  .-.  |   |  |     \ |  | |  ||  .  '.' 
-      |  | |  ||   ,'.   | \       /   `'  '-'  '|  |   |  |  |  `---.      \       /   |  |   |  |\  \(_|  |   |  | \   |  |  '--'  |        |  '--'  |  |  `---.|  | \   |  |  `---.|  |\  \   |  | |  |   |  |      `'  '-'  '|  |\  \  
-      `--' `--''--'   '--'  `-----'      `-----' `--'   `--'  `------'       `-----'    `--'   `--' '--' `--'   `--'  `--'   `------'          `------'   `------'`--'  `--'  `------'`--' '--'  `--' `--'   `--'        `-----' `--' '--' 
-    </h1>
+    <h1>Product Entry Form</h1>
   </div>
+
   <div class="calculator-container">
-    <textarea class="random-string-field" onclick="generateRandomStrings(this)">Click here to generate random strings</textarea>
-    <div class="button-container">
-      <button id="randomButton" onclick="selectRandomLines()" disabled>Select Random Lines</button>
-    </div>
-    <textarea id="selected-lines" class="random-string-field" readonly rows="3"></textarea>
+    <input type="text" id="productName" name="productName" placeholder="Enter product name">
+    <input type="number" id="productPrice" name="productPrice" placeholder="Enter product price">
   </div>
-<script>
-  let generated = false; // Flag to track if strings are already generated
 
-  // Function to generate random strings and populate the field
-  function generateRandomStrings(element) {
-    if (!generated) { // Check if strings are not already generated
-      
-      // Define characters to be used in generating random strings
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|[]\\;\',./<>?';
-      const length = 32; // Length of each line
-      const lines = 8; // Number of lines
-
-      let randomStrings = '';
-      for (let i = 0; i < lines; i++) {
-        let line = '';
-        for (let j = 0; j < length; j++) {
-          const randomIndex = Math.floor(Math.random() * characters.length);
-          line += characters.charAt(randomIndex);
-        }
-        randomStrings += line + '\n';
+  <script>
+    // Product class with name and price fields
+    class Product {
+      constructor(name, price) {
+        this.name = name;
+        this.price = price;
       }
-      element.value = randomStrings; // Populate the field with generated strings
-      
-      // Enable the button after generating random strings
-      document.getElementById('randomButton').disabled = false;
-      
-      generated = true; // Update the flag to indicate generation
-    }
-  }
-
-  // Function to select random lines and display in a new textarea
-  function selectRandomLines() {
-    const textArea = document.querySelector('.random-string-field');
-    const lines = textArea.value.split('\n').filter(line => line.trim() !== ''); // Get lines, remove empty ones
-
-    const selectedLines = [];
-    while (selectedLines.length < 3 && lines.length > 0) {
-      const randomIndex = Math.floor(Math.random() * lines.length);
-      selectedLines.push(lines[randomIndex]);
-      lines.splice(randomIndex, 1);
     }
 
-    const selectedTextArea = document.getElementById('selected-lines');
-    selectedTextArea.value = selectedLines.join('\n');
-  }
-</script>
+    // You can now use the 'Product' class to create instances based on user input or any other logic
+  </script>
 </body>
 </html>
