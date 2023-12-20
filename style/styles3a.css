@@ -1,0 +1,103 @@
+body {
+  font-family: 'Roboto Mono', monospace;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: #000000;
+  color: #ccc;
+}
+
+.title-container {
+  text-align: justify;
+  margin-bottom: 20px;
+}
+
+.title-container h1 {
+  font-size: 12px;
+  white-space: pre;
+  font-weight: bold;
+  animation: changeColor 1.5s linear infinite;
+}
+
+@keyframes changeColor {
+  0% {
+    color: red;
+  }
+  33% {
+    color: green;
+  }
+  66% {
+    color: blue;
+  }
+  100% {
+    color: red;
+  }
+}
+
+.calculator-container {
+  max-width: 600px;
+  padding: 20px;
+  border: 2px dashed #ccc;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+label {
+  width: 80px;
+  margin-right: 0px;
+  text-align: left;
+}
+
+input[type="number"] {
+  width: 400px;
+}
+
+canvas {
+  border: 1px solid #000;
+  display: block;
+  margin-top: 20px;
+}
+
+button {
+  background-color: #222;
+  color: #ccc;
+  font-family: 'Roboto Mono', monospace;
+}
+
+button:hover {
+  transform: scale(1.1);
+  animation: changeColorButton 1.5s linear infinite;
+}
+
+@keyframes changeColorButton {
+  0% {
+    color: #FF0000;
+  }
+  33% {
+    color: #00FF00;
+  }
+  66% {
+    color: #0000FF;
+  }
+  100% {
+    color: #FF0000;
+  }
+}
+
+input[type="number"] {
+  background-color: #222;
+  color: #ccc;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: bold;
+  border: none;
+  padding: 2px;
+  border-radius: 10px;
+}
