@@ -41,11 +41,12 @@
     function calculateAreaWithHeight() {
       const sideA = parseFloat(document.getElementById('sideA').value);
       const height = parseFloat(document.getElementById('height').value);
-
+      const angle = Math.floor(Math.random() * (80 - 10 + 1)) + 10;
       let area;
 
       if (!isNaN(sideA) && !isNaN(height)) {
         area = sideA * height;
+        area = Math.abs(area);
 
         if (!isNaN(area)) {
           document.getElementById('result').textContent = area.toFixed(2);
@@ -68,6 +69,7 @@
       if (!isNaN(sideA) && !isNaN(sideB) && !isNaN(angle)) {
         const radianAngle = (angle * Math.PI) / 180; // Convert angle to radians
         area = sideA * sideB * Math.sin(radianAngle);
+        area = Math.abs(area);
 
         if (!isNaN(area)) {
           document.getElementById('result').textContent = area.toFixed(2);
@@ -86,18 +88,19 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const radianAngle = (angle * Math.PI) / 180; // Convert angle to radians
-      const c = Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(radianAngle)); // Calculate third side
-
+      // Calculate the scaled side lengths to fit within the canvas
+       const scaleFactor = canvas.width / (a+b);
+       const scaledA = a * scaleFactor;
+       const scaledB = b * Math.cos(radianAngle) * scaleFactor;
       // Calculate coordinates of parallelogram vertices
-      const x1 = 50;
+      const x1 = (canvas.width - scaledA - scaledB * Math.cos(radianAngle)) / 2;
       const y1 = canvas.height / 2;
-      const x2 = x1 + a;
+      const x2 = x1 + scaledA;
       const y2 = y1;
-      const x3 = x1 + b * Math.cos(radianAngle);
-      const y3 = y1 - b * Math.sin(radianAngle);
-      const x4 = x3 + a;
+      const x3 = x1 + scaledB * Math.cos(radianAngle);
+      const y3 = y1 - scaledB * Math.sin(radianAngle);
+      const x4 = x3 + scaledA;
       const y4 = y3;
-
       // Draw parallelogram
       ctx.beginPath();
       ctx.moveTo(x1, y1);
